@@ -16,8 +16,9 @@ use DataTables;
 
 class ProjectController extends Controller
 {
+    //insert 10000 records in project table using Faker
     public function index(){
-        Projects::truncate();
+        Projects::truncate();       //Truncate use for empty table before insertion
         Properties::truncate();
 
         $faker = Faker::create();
@@ -32,8 +33,9 @@ class ProjectController extends Controller
         $this->Properties();
     }
 
+    //Insert Properties using Faker
     public function Properties(){
-      $faker = Faker::create();
+     $faker = Faker::create();          //Use to create and get dummy data
      $pn = Projects::all()->random(1)->first();
     
      $projectId = $pn->id;
@@ -76,7 +78,7 @@ class ProjectController extends Controller
             $case1Properties[] = $singleProperty;
         }
 
-        Properties::insert($case1Properties);
+        Properties::insert($case1Properties);      
 
         $allProjects = Projects::select('id')->whereNotIn('id', [$pn->id])->get();
         $allProjects = $allProjects->toArray();
@@ -109,7 +111,10 @@ class ProjectController extends Controller
             $case2Properties[] = $singleProperty;
         }
 
-        Properties::insert($case2Properties);
+        Properties::insert($case2Properties);  //insert 2001 records in properties table for There should be 1 project with 2001 properties
+
+         
+
         $count = 0;
         for($i=0;$i<15;$i++){
             if($i==14){
@@ -146,12 +151,14 @@ class ProjectController extends Controller
           
         }
 
-        Properties::insert($case3Properties);
+        Properties::insert($case3Properties); //Insert records in properties table for There should be 3000 properties that are 'Active' - ‘Condo’ -  'For sale: Yes' - '2 bedrooms'
         
       }
       
       echo 'Success';
     }
+
+    //Create function for save and check temporory data in database
     public function saveData() {
         $allProjects = Projects::select('id')->whereNotIn('id', [1])->get();
         $allProjects = $allProjects->toArray();
@@ -163,6 +170,7 @@ class ProjectController extends Controller
         print_r($allProjects);die;
     }
 
+    //Get random project id for properties table
     public function array_random_assoc($arr, $num = 1) {
         $keys = array_keys($arr);
         shuffle($keys);
@@ -172,6 +180,8 @@ class ProjectController extends Controller
         }
         return $r;
     }
+
+    //get all data for display in datatable view
     public function projectsList(Request $request)
     {
          return DataTables()->query(DB::table("properties")

@@ -114,7 +114,8 @@ class PropertiesTest extends TestCase
                 $case2Properties[] = $singleProperty;
             }
 
-            Properties::insert($case2Properties);
+            Properties::insert($case2Properties);  //insert 2001 records in properties table for There should be 1 project with 2001 properties
+
             $count = 0;
             for($i=0;$i<15;$i++){
                 if($i==14){
@@ -151,7 +152,7 @@ class PropertiesTest extends TestCase
                 
             }
 
-            Properties::insert($case3Properties);
+            Properties::insert($case3Properties); //Insert records in properties table for There should be 3000 properties that are 'Active' - ‘Condo’ -  'For sale: Yes' - '2 bedrooms'
             
           }
 
@@ -238,7 +239,7 @@ class PropertiesTest extends TestCase
         return $r;
     }
 
-     //For Temperorty save data
+     //For Temperorty test and save data
      public function saveData() {
         $allProjects = Projects::select('id')->whereNotIn('id', [1])->get();
         $allProjects = $allProjects->toArray();
